@@ -1,6 +1,6 @@
+ApplicationPet.destroy_all
 Pet.destroy_all
 Shelter.destroy_all
-ApplicationPet.destroy_all
 ApplicationForm.destroy_all
 
 lhs = Shelter.create!(name: 'Longmont Humane Society', address: '9595 Nelson Road', city: 'Longmont', state: 'CO', zip: 80501)

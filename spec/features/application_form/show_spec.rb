@@ -50,5 +50,17 @@ RSpec.describe "the Application index page", type: :feature do
     expect(page).to have_content(@app_1.description)
     expect(page).to have_content("#{@app_1.zip_code}")
     expect(page).to have_content("Status: Accepted")
+
+    within("#pet-#{@chippy.id}") do
+      expect(page).to have_link "#{@chippy.name}", href: "/pets/#{@chippy.id}"
+    end
+
+    within("#pet-#{@gracie.id}") do
+      expect(page).to have_link "#{@gracie.name}", href: "/pets/#{@gracie.id}"
+    end
+
+    within("#pet-#{@floppy.id}") do
+      expect(page).to have_link "#{@floppy.name}", href: "/pets/#{@floppy.id}"
+    end
   end
 end

@@ -7,7 +7,7 @@
 <p>Description: <%= "#{@application.description}" %></p>
 
 <% if @application.reviewed == false %>
-  <p>Status: Pending</p>
+  <p>Status: In Progress</p>
 <% else %>
   <% if @application.accepted == true %>
     <p>Status: Accepted</p>
@@ -15,3 +15,9 @@
     <p>Status: Rejected</p>
   <% end %>
 <% end %>
+
+<% @application.pets.each do |pet| %>
+  <section id="pet-<%=pet.id%>">
+  <%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
+<% end %>
+</section>
