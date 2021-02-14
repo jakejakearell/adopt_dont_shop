@@ -85,6 +85,12 @@ RSpec.describe "the Application index page", type: :feature do
 
         expect(page).to have_button('Search for pets')
 
+        fill_in 'query', with: "chippy"
+
+        click_on 'Search for pets'
+
+        expect(page).to have_content("chippy")
+
       end
     end
   end
