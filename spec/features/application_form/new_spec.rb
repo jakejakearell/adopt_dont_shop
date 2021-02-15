@@ -30,6 +30,7 @@ RSpec.describe "the Application index page", type: :feature do
                                      description:"i want old dog",
                                      reviewed: true,
                                      accepted: true)
+
     @app_3 = ApplicationForm.create!(name:"jimmy",
                                      street_address:"234 lane",
                                      city:"boulder",
