@@ -31,6 +31,15 @@ RSpec.describe "the Application index page", type: :feature do
                                      reviewed: true,
                                      accepted: true)
 
+    @app_3 = ApplicationForm.create!(name:"jimmy",
+                                     street_address:"234 lane",
+                                     city:"boulder",
+                                     state:"CO",
+                                     zip_code:80501,
+                                     description:"i want cool dog",
+                                     reviewed: true,
+                                     accepted: true)
+
     ApplicationPet.create!(application_form: @app_1, pet: @chippy)
     ApplicationPet.create!(application_form: @app_1, pet: @gracie)
     ApplicationPet.create!(application_form: @app_1, pet: @floppy)
@@ -51,9 +60,6 @@ RSpec.describe "the Application index page", type: :feature do
         fill_in "city", with: 'Dover'
         fill_in "state", with: 'CO'
         fill_in "zip_code", with: 3
-        fill_in "description", with: "idk"
-        fill_in "reviewed", with: "false"
-        fill_in "accepted", with: "false"
 
         click_on 'Create Application'
 

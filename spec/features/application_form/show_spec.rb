@@ -31,36 +31,66 @@ RSpec.describe "the Application index page", type: :feature do
                                      reviewed: true,
                                      accepted: true)
 
+    @app_3 = ApplicationForm.create!(name:"chad",
+                                     street_address:"234 lane",
+                                     city:"boulder",
+                                     state:"CO",
+                                     zip_code:80501,
+                                     description:"i want cool dog",
+                                     reviewed: true,
+                                     accepted: true)
+
     ApplicationPet.create!(application_form: @app_1, pet: @chippy)
     ApplicationPet.create!(application_form: @app_1, pet: @gracie)
     ApplicationPet.create!(application_form: @app_1, pet: @floppy)
 
-    ApplicationPet.create!(application_form: @app_2, pet: @choppy)
-    ApplicationPet.create!(application_form: @app_2, pet: @jack)
-    ApplicationPet.create!(application_form: @app_2, pet: @cindy)
   end
 
-  it "should display all the application info" do
-    visit "/applications/#{@app_1.id}"
+  describe "As a visitor" do
+    describe 'when I visit a show page' do
+      it "should display all the application info" do
+        visit "/applications/#{@app_1.id}"
 
-    expect(page).to have_content(@app_1.name)
-    expect(page).to have_content(@app_1.street_address)
-    expect(page).to have_content(@app_1.city)
-    expect(page).to have_content(@app_1.state)
-    expect(page).to have_content(@app_1.description)
-    expect(page).to have_content("#{@app_1.zip_code}")
-    expect(page).to have_content("Status: Accepted")
+        expect(page).to have_content(@app_1.name)
+        expect(page).to have_content(@app_1.street_address)
+        expect(page).to have_content(@app_1.city)
+        expect(page).to have_content(@app_1.state)
+        expect(page).to have_content(@app_1.description)
+        expect(page).to have_content("#{@app_1.zip_code}")
+        expect(page).to have_content("Status: Accepted")
 
-    within("#pet-#{@chippy.id}") do
-      expect(page).to have_link "#{@chippy.name}", href: "/pets/#{@chippy.id}"
-    end
+        within("#pet-#{@chippy.id}") do
+          expect(page).to have_link "#{@chippy.name}", href: "/pets/#{@chippy.id}"
+        end
 
-    within("#pet-#{@gracie.id}") do
-      expect(page).to have_link "#{@gracie.name}", href: "/pets/#{@gracie.id}"
-    end
+        within("#pet-#{@gracie.id}") do
+          expect(page).to have_link "#{@gracie.name}", href: "/pets/#{@gracie.id}"
+        end
 
-    within("#pet-#{@floppy.id}") do
-      expect(page).to have_link "#{@floppy.name}", href: "/pets/#{@floppy.id}"
+        within("#pet-#{@floppy.id}") do
+          expect(page).to have_link "#{@floppy.name}", href: "/pets/#{@floppy.id}"
+        end
+      end
+
+      describe 'when I am on my application show page' do
+        it "can search for for pets and I can add them to my application" do
+          visit "/applications/#{@app_3.id}"
+
+          expect(page).to have_button('Search for pets')
+
+          fill_in 'query', with: "jack"
+
+          click_on 'Search for pets'
+
+          click_on 'Adopt Me'
+
+
+          expect(page).to have_content("jack")
+
+          expect(current_path).to eq("/applications/#{@app_3.id}")
+
+        end
+      end
     end
   end
 end
