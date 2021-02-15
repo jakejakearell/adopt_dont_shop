@@ -44,9 +44,6 @@ RSpec.describe "the Application index page", type: :feature do
     ApplicationPet.create!(application_form: @app_1, pet: @gracie)
     ApplicationPet.create!(application_form: @app_1, pet: @floppy)
 
-    ApplicationPet.create!(application_form: @app_2, pet: @choppy)
-    ApplicationPet.create!(application_form: @app_2, pet: @jack)
-    ApplicationPet.create!(application_form: @app_2, pet: @cindy)
   end
 
   describe "As a visitor" do
@@ -81,11 +78,17 @@ RSpec.describe "the Application index page", type: :feature do
 
           expect(page).to have_button('Search for pets')
 
-          fill_in 'query', with: "chippy"
+          fill_in 'query', with: "jack"
 
           click_on 'Search for pets'
 
-          expect(page).to have_content("chippy")
+          click_on 'Adopt Me'
+
+
+          expect(page).to have_content("jack")
+
+          expect(current_path).to eq("/applications/#{@app_3.id}")
+
         end
       end
     end
