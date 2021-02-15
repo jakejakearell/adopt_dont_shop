@@ -19,18 +19,16 @@ app_1 = ApplicationForm.create!(name:"jake",
                                  city:"Mead",
                                  state:"CO",
                                  zip_code:80235,
-                                 description:"i want puppy",
-                                 reviewed: true,
-                                 accepted: true)
+                                 description:"i want puppy"
+                                )
 
 app_2 = ApplicationForm.create!(name:"seth",
                                  street_address:"124 st",
                                  city:"Longmont",
                                  state:"CO",
                                  zip_code:80501,
-                                 description:"i want old dog",
-                                 reviewed: true,
-                                 accepted: true)
+                                 description:"i want old dog"
+                               )
 
 ApplicationPet.create!(application_form: app_1, pet: chippy)
 ApplicationPet.create!(application_form: app_1, pet: gracie)

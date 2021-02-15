@@ -8,26 +8,28 @@
 
 <% if @application.reviewed == false %>
   <p>Status: In Progress</p>
-<% else %>
-  <% if @application.accepted == true %>
+<% elsif @application.reviewed == true %>
+  <p>Status: Pending</p>
+<% elsif @application.accepted == true %>
     <p>Status: Accepted</p>
-  <% else %>
-    <p>Status: Rejected</p>
-  <% end %>
-<% end %>
-
-<%= form_with url: "/applications/#{@application.id}/pet_search", method: :post, local: true do |form| %>
-   <%= form.label :query, "Pet finder:" %><br/>
-   <%= form.text_field :query %>
-   <%= form.submit "Search for pets" %>
-<% end %>
-
-<% if @searched_pets.nil? %>
-  <p>Start searching for your forever friends today!</p>
 <% else %>
-  <% @searched_pets.each do |pet| %>
-    <p><%= pet.name %></p>
-    <%= button_to "Adopt Me", {:controller => "application_forms", :action => "add_pet", :pet_id => "#{pet.id}", } , :method=>:post   %>
+    <p>Status: Rejected</p>
+<% end %>
+
+<% if @application.reviewed != true %>
+  <%= form_with url: "/applications/#{@application.id}/pet_search", method: :post, local: true do |form| %>
+     <%= form.label :query, "Pet finder:" %><br/>
+     <%= form.text_field :query %>
+     <%= form.submit "Search for pets" %>
+  <% end %>
+
+  <% if @searched_pets.nil? %>
+    <p>Start searching for your forever friends today!</p>
+  <% else %>
+    <% @searched_pets.each do |pet| %>
+      <p><%= pet.name %></p>
+      <%= button_to "Adopt Me", {:controller => "application_forms", :action => "add_pet", :pet_id => "#{pet.id}", } , :method=>:post   %>
+    <% end %>
   <% end %>
 <% end %>
 
@@ -36,3 +38,15 @@
   <%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
 <% end %>
 </section>
+
+<div id="application-<%=@application.id%>">
+  <% if !@application.pets.empty? && @application.reviewed == false %>
+    <form action="/applications/<%= @application.id %>" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="PATCH" />
+    <label for "description">why I want pets:</label>
+    <textarea id="description" type='text' name='application_form[description]'>Explain why you would be a good pet owner:   </textarea><br/>
+    <input type='submit'/>
+  </form>
+  <% end %>
+</div>

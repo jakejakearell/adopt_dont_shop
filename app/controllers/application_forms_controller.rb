@@ -10,6 +10,12 @@ class ApplicationFormsController < ApplicationController
   def new
   end
 
+  def update
+    application = ApplicationForm.find(params[:id])
+    application.update(description: params[:application_form][:description], reviewed: true )
+    redirect_to "/applications/#{application.id}"
+  end
+
   def create
     pet_application = ApplicationForm.new(application_params)
     if pet_application.save
