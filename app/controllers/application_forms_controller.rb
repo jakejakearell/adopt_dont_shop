@@ -20,6 +20,20 @@ class ApplicationFormsController < ApplicationController
     end
   end
 
+  def pet_search
+    @application = ApplicationForm.find(params[:id])
+    @searched_pets = Pet.where("name = ?", params[:query])
+    render :show
+  end
+
+  def add_pet
+    pet = Pet.find(params[:pet_id])
+    @application = ApplicationForm.find(params[:id])
+    ApplicationPet.create!(application_form: @application, pet: pet)
+
+    render :show
+  end
+
   private
 
   def application_params
