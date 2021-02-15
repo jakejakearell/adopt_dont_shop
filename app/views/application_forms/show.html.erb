@@ -16,6 +16,21 @@
   <% end %>
 <% end %>
 
+<%= form_with url: "/applications/#{@application.id}/pet_search", method: :post, local: true do |form| %>
+   <%= form.label :query, "Pet finder:" %><br/>
+   <%= form.text_field :query %>
+   <%= form.submit "Search for pets" %>
+<% end %>
+
+<% if @searched_pets.nil? %>
+  <p>Start searching for your forever friends today!</p>
+<% else %>
+  <% @searched_pets.each do |pet| %>
+    <p><%= pet.name %></p>
+    <%= button_to "Adopt Me", {:controller => "application_forms", :action => "add_pet", :pet_id => "#{pet.id}", } , :method=>:post   %>
+  <% end %>
+<% end %>
+
 <% @application.pets.each do |pet| %>
   <section id="pet-<%=pet.id%>">
   <%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
