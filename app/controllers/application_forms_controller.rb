@@ -31,7 +31,7 @@ class ApplicationFormsController < ApplicationController
     @application = ApplicationForm.find(params[:id])
     ApplicationPet.create!(application_form: @application, pet: pet)
 
-    render :show
+    redirect_to "/applications/#{@application.id}"
   end
 
   private
