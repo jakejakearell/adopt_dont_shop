@@ -79,19 +79,6 @@ RSpec.describe "the Application index page", type: :feature do
         expect(page).to have_content("Application not created: Required information missing.")
         expect(page).to have_button('Create Application')
       end
-
-      it "has a place to search for and returns pet" do
-        visit "/applications/#{@app_3.id}"
-
-        expect(page).to have_button('Search for pets')
-
-        fill_in 'query', with: "chippy"
-
-        click_on 'Search for pets'
-
-        expect(page).to have_content("chippy")
-
-      end
     end
   end
 end
