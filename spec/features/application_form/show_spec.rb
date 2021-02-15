@@ -18,9 +18,8 @@ RSpec.describe "the Application index page", type: :feature do
                                      city:"Mead",
                                      state:"CO",
                                      zip_code:80235,
-                                     description:"i want puppy",
-                                     reviewed: true,
-                                     accepted: true)
+                                     description:"i want puppy"
+                                      )
 
     @app_2 = ApplicationForm.create!(name:"seth",
                                      street_address:"124 st",
@@ -28,17 +27,15 @@ RSpec.describe "the Application index page", type: :feature do
                                      state:"CO",
                                      zip_code:80501,
                                      description:"i want old dog",
-                                     reviewed: true,
-                                     accepted: true)
+                                      )
 
     @app_3 = ApplicationForm.create!(name:"chad",
                                      street_address:"234 lane",
                                      city:"boulder",
                                      state:"CO",
                                      zip_code:80501,
-                                     description:"i want cool dog",
-                                     reviewed: true,
-                                     accepted: true)
+                                     description:"i want cool dog"
+                                      )
 
     ApplicationPet.create!(application_form: @app_1, pet: @chippy)
     ApplicationPet.create!(application_form: @app_1, pet: @gracie)
@@ -57,7 +54,7 @@ RSpec.describe "the Application index page", type: :feature do
         expect(page).to have_content(@app_1.state)
         expect(page).to have_content(@app_1.description)
         expect(page).to have_content("#{@app_1.zip_code}")
-        expect(page).to have_content("Status: Accepted")
+        expect(page).to have_content("Status: In Progress")
 
         within("#pet-#{@chippy.id}") do
           expect(page).to have_link "#{@chippy.name}", href: "/pets/#{@chippy.id}"
@@ -72,8 +69,8 @@ RSpec.describe "the Application index page", type: :feature do
         end
       end
 
-      describe 'when I am on my application show page' do
-        it "can search for for pets and I can add them to my application" do
+      describe 'I can search for pets' do
+        it "can add them to my application" do
           visit "/applications/#{@app_3.id}"
 
           expect(page).to have_button('Search for pets')
@@ -84,11 +81,51 @@ RSpec.describe "the Application index page", type: :feature do
 
           click_on 'Adopt Me'
 
-
           expect(page).to have_content("jack")
 
           expect(current_path).to eq("/applications/#{@app_3.id}")
+        end
 
+        it "will only allow me to add a description and submit my application when I have added a pet" do
+          visit "/applications/#{@app_3.id}"
+
+          expect(page).to have_no_content "why I want pets"
+
+          fill_in 'query', with: "jack"
+          click_on 'Search for pets'
+          click_on 'Adopt Me'
+
+
+          expect(page).to have_content "why I want pets"
+          fill_in 'description', with: "I love dogs!"
+
+          within("#application-#{@app_3.id}") do
+            click_button
+          end
+
+          expect(page).to have_content "Description: I love dogs!"
+        end
+
+        it "will only allow to search for pets when my application is 'in progress' " do
+          visit "/applications/#{@app_3.id}"
+
+          expect(page).to have_no_content "why I want pets"
+
+          fill_in 'query', with: "jack"
+          click_on 'Search for pets'
+          click_on 'Adopt Me'
+
+
+          expect(page).to have_content "why I want pets"
+          fill_in 'description', with: "I love dogs!"
+
+          within("#application-#{@app_3.id}") do
+            click_button
+          end
+
+          expect(page).to have_content "Pending"
+
+          expect(page).to have_no_button "Search for pets"
         end
       end
     end
