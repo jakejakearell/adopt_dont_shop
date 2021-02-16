@@ -47,6 +47,18 @@ RSpec.describe "the Application index page", type: :feature do
     describe 'when I visit an application show page' do
       it "I can approve pet adoption" do
         visit "admin/applications/#{@app_1.id}"
+
+        expect(page).to have_content("#{@chippy.name}")
+        expect(page).to have_content("#{@gracie.name}")
+        expect(page).to have_content("#{@floppy.name}")
+
+        within "#pet-id#{@chippy.id}" do
+          click_button "Adopt"
+        end
+
+        within "#pet-id#{@chippy.id}" do
+          expect(page).to have_no_button("Adopt")
+        end
       end
     end
   end
