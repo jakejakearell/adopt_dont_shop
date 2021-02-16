@@ -86,6 +86,22 @@ RSpec.describe "the Application index page", type: :feature do
           expect(current_path).to eq("/applications/#{@app_3.id}")
         end
 
+        it "can recognize incomplete pet names and is case insensitive" do
+          visit "/applications/#{@app_3.id}"
+
+          expect(page).to have_button('Search for pets')
+
+          fill_in 'query', with: "JaC"
+
+          click_on 'Search for pets'
+
+          click_on 'Adopt Me'
+
+          expect(page).to have_content("jack")
+
+          expect(current_path).to eq("/applications/#{@app_3.id}")
+        end
+
         it "will only allow me to add a description and submit my application when I have added a pet" do
           visit "/applications/#{@app_3.id}"
 
