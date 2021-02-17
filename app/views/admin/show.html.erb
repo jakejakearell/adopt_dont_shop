@@ -7,6 +7,7 @@
 
   <% if app_pet.accepted.nil? %>
     <%= button_to "Approve", {:controller => "admin", :action => "pet_status", :application_id => "#{@application.id}", :approve => true, :pet => "#{pet.id}" } , :method=>:post  %>
+    <%= button_to "Reject", {:controller => "admin", :action => "pet_status", :application_id => "#{@application.id}", :approve => false, :pet => "#{pet.id}" } , :method=>:post  %>
   <% elsif app_pet.accepted == true%>
     <p> Accepted </p>
   <% else %>
