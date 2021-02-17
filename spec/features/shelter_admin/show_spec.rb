@@ -47,7 +47,6 @@ RSpec.describe "the Application index page", type: :feature do
       it "I can approve pet adoption" do
         visit "admin/applications/#{@app_1.id}"
 
-
         expect(page).to have_content("#{@chippy.name}")
 
         within "#pet_id-#{@chippy.id}" do
@@ -56,6 +55,7 @@ RSpec.describe "the Application index page", type: :feature do
 
         within "#pet_id-#{@chippy.id}" do
           expect(page).to have_no_button("Approve")
+          expect(page).to have_content("Accepted")
         end
       end
     end
