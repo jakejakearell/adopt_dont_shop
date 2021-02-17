@@ -37,9 +37,8 @@ RSpec.describe "the Application index page", type: :feature do
                                      description:"i want cool dog"
                                       )
 
+
     ApplicationPet.create!(application_form: @app_1, pet: @chippy)
-    ApplicationPet.create!(application_form: @app_1, pet: @gracie)
-    ApplicationPet.create!(application_form: @app_1, pet: @floppy)
 
   end
 
@@ -48,16 +47,15 @@ RSpec.describe "the Application index page", type: :feature do
       it "I can approve pet adoption" do
         visit "admin/applications/#{@app_1.id}"
 
-        expect(page).to have_content("#{@chippy.name}")
-        expect(page).to have_content("#{@gracie.name}")
-        expect(page).to have_content("#{@floppy.name}")
 
-        within "#pet-id#{@chippy.id}" do
-          click_button "Adopt"
+        expect(page).to have_content("#{@chippy.name}")
+
+        within "#pet_id-#{@chippy.id}" do
+          click_button "Approve"
         end
 
-        within "#pet-id#{@chippy.id}" do
-          expect(page).to have_no_button("Adopt")
+        within "#pet_id-#{@chippy.id}" do
+          expect(page).to have_no_button("Approve")
         end
       end
     end
