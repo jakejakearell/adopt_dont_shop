@@ -59,7 +59,7 @@ RSpec.describe "the Application index page", type: :feature do
         end
       end
 
-    describe 'when I visit an application show page' do
+
       it "I can reject pet adoption" do
         visit "admin/applications/#{@app_1.id}"
 
@@ -74,6 +74,6 @@ RSpec.describe "the Application index page", type: :feature do
           expect(page).to have_content("Rejected")
         end
       end
-    end
+    end 
   end
 end
