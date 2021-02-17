@@ -31,4 +31,5 @@ Rails.application.routes.draw do
   patch "/applications/:id", to: "application_forms#update"
 
   get "/admin/applications/:id", to: "admin#show"
+  post "/admin/pet_status", to: "admin#pet_status"
 end
