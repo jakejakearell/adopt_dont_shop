@@ -26,7 +26,7 @@
 
 
 
-      <% if @application.reviewed == false %>
+      <% if @application.reviewed == false && @application.accepted.nil? %>
         <p>Status: In Progress</p>
       <% elsif @application.reviewed == true && @application.accepted.nil? %>
         <p>Status: Pending</p>

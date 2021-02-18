@@ -1,15 +1,16 @@
 <div class="container-fluid">
 <% @application.pets.each do |pet| %>
-  <section id="pet_id-<%=pet.id%>">
 
   <div class="media">
     <%= image_tag "#{pet.image}", class: "align-self-start mr-3", style: "width:320px;height:240px;" %>
     <div class="media-body">
       <h5 class="mt-0"> <%= pet.name %></h5>
       <% app_pet = pet.application_pets.where("application_form_id = ?", @application.id)[0] %>
+      <div id="pet_id-<%=pet.id%>">
       <% if app_pet.accepted.nil? %>
         <%= button_to "Approve", {:controller => "admin", :action => "pet_status", :application_id => "#{@application.id}", :approve => true, :pet => "#{pet.id}" } , :method=>:post  %>
         <%= button_to "Reject", {:controller => "admin", :action => "pet_status", :application_id => "#{@application.id}", :approve => false, :pet => "#{pet.id}" } , :method=>:post  %>
+      </div>
       <% elsif app_pet.accepted == true%>
         <p> Accepted </p>
       <% else %>
@@ -20,5 +21,4 @@
 
 
 <% end %>
-</section>
 </div>

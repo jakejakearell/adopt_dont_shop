@@ -13,6 +13,7 @@ class ApplicationPet < ApplicationRecord
   def self.approved?(pet_id, app_id)
     application = ApplicationForm.find(app_id)
     pets = ApplicationPet.where("pet_id = ? AND application_form_id = ?", pet_id, app_id)
+
     if pets.where("accepted = ?", false).count >= 1
       application.update(accepted: false)
     elsif pets.where("accepted = ?", true).count == pets.count

@@ -40,6 +40,9 @@ RSpec.describe "the Application index page", type: :feature do
 
     ApplicationPet.create!(application_form: @app_1, pet: @chippy)
     ApplicationPet.create!(application_form: @app_2, pet: @chippy)
+    ApplicationPet.create!(application_form: @app_3, pet: @chippy)
+    ApplicationPet.create!(application_form: @app_3, pet: @floppy)
+    ApplicationPet.create!(application_form: @app_3, pet: @jack)
 
   end
 
@@ -101,6 +104,40 @@ RSpec.describe "the Application index page", type: :feature do
           expect(page).to have_no_button("Reject")
           expect(page).to have_content("Rejected")
         end
+      end
+
+      it "if pet approved application status updated" do
+        visit "admin/applications/#{@app_1.id}"
+
+        within "#pet_id-#{@chippy.id}" do
+          click_button "Approve"
+        end
+
+        visit "/applications/#{@app_1.id}"
+
+        expect(page).to have_content("Accepted")
+
+      end
+
+      it "if any pet application rejected status app rejected" do
+        visit "admin/applications/#{@app_3.id}"
+
+        within "#pet_id-#{@chippy.id}" do
+          click_button "Approve"
+        end
+
+        within "#pet_id-#{@floppy.id}" do
+          click_button "Approve"
+        end
+
+        within "#pet_id-#{@jack.id}" do
+          click_button "Reject"
+        end
+
+        visit "/applications/#{@app_3.id}"
+
+        expect(page).to have_content("Rejected")
+
       end
     end
   end
