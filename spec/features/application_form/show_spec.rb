@@ -143,6 +143,15 @@ RSpec.describe "the Application index page", type: :feature do
 
           expect(page).to have_no_button "Search for pets"
         end
+
+        it "will give error if searched with no text" do
+          visit "/applications/#{@app_3.id}"
+
+          click_on 'Search for pets'
+
+          expect(page).to have_content "Enter search term."
+
+        end
       end
     end
   end
