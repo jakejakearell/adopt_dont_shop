@@ -18,6 +18,8 @@ class ApplicationPet < ApplicationRecord
       application.update(accepted: false)
     elsif pets.where("accepted = ?", true).count == pets.count
       application.update(accepted: true)
+      pet = Pet.find(pet_id)
+      pet.update(adoptable: false)
     end
   end
 end
