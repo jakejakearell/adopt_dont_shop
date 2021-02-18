@@ -39,6 +39,7 @@ RSpec.describe "the Application index page", type: :feature do
 
 
     ApplicationPet.create!(application_form: @app_1, pet: @chippy)
+    ApplicationPet.create!(application_form: @app_2, pet: @chippy)
 
   end
 
@@ -74,6 +75,33 @@ RSpec.describe "the Application index page", type: :feature do
           expect(page).to have_content("Rejected")
         end
       end
-    end 
+
+      it "acceptenance on one application does not affect another application" do
+        visit "admin/applications/#{@app_1.id}"
+
+        within "#pet_id-#{@chippy.id}" do
+          click_button "Approve"
+        end
+
+        within "#pet_id-#{@chippy.id}" do
+          expect(page).to have_no_button("Approve")
+          expect(page).to have_content("Accepted")
+        end
+
+        visit "/admin/applications/#{@app_2.id}"
+
+        expect(page).to have_content("#{@chippy.name}")
+        expect(page).to have_no_content("Accepted")
+
+        within "#pet_id-#{@chippy.id}" do
+          click_button "Reject"
+        end
+
+        within "#pet_id-#{@chippy.id}" do
+          expect(page).to have_no_button("Reject")
+          expect(page).to have_content("Rejected")
+        end
+      end
+    end
   end
 end
