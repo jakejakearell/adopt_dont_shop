@@ -139,6 +139,32 @@ RSpec.describe "the Application index page", type: :feature do
         expect(page).to have_content("Rejected")
 
       end
+
+      it "if any pet application is accepted, pet status updates" do
+        visit "admin/applications/#{@app_1.id}"
+
+        within "#pet_id-#{@chippy.id}" do
+          click_button "Approve"
+        end
+
+        visit "/pets/#{@chippy.id}"
+
+        expect(page).to have_content("Adoption Status: false")
+
+      end
+
+      it "if any pet application is accepted, pet status updates" do
+        visit "admin/applications/#{@app_1.id}"
+
+        within "#pet_id-#{@chippy.id}" do
+          click_button "Approve"
+        end
+
+        visit "/admin/applications/#{@app_2.id}"
+
+        expect(page).to have_content("Pet has been adopted")
+        expect(page).to have_no_button("Approve")
+      end
     end
   end
 end
