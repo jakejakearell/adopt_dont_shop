@@ -5,8 +5,9 @@ class AdminController < ApplicationController
 
   def pet_status
     @application = ApplicationForm.find(params[:application_id])
-    pet = ApplicationPet.where("pet_id = ? AND application_form_id = ?", params[:pet], @application.id)
+    pet = ApplicationPet.pet_on_app(params[:pet], @application.id)
     pet.update(accepted: params[:approve])
+    ApplicationPet.approved?(params[:pet], params[:application_id])
     render :show
   end
 end
