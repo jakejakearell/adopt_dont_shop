@@ -24,25 +24,25 @@
     </div>
   </div>
 
-
-
-      <% if @application.reviewed == false && @application.accepted.nil? %>
-        <p>Status: In Progress</p>
-      <% elsif @application.reviewed == true && @application.accepted.nil? %>
-        <p>Status: Pending</p>
-      <% elsif @application.accepted == true %>
-          <p>Status: Accepted</p>
-      <% else %>
-          <p>Status: Rejected</p>
-      <% end %>
+  <% if @application.reviewed == false && @application.accepted.nil? %>
+    <p>Status: In Progress</p>
+  <% elsif @application.reviewed == true && @application.accepted.nil? %>
+    <p>Status: Pending</p>
+  <% elsif @application.accepted == true %>
+      <p>Status: Accepted</p>
+  <% else %>
+      <p>Status: Rejected</p>
+  <% end %>
 
   <% if @application.reviewed != true %>
 
+
     <%= form_with url: "/applications/#{@application.id}/pet_search", method: :post, local: true do |form| %>
-       <%= form.label :query, "Pet finder:", class: "form-group"%><br/>
-       <%= form.text_field :query, class: "form-control" %>
-       <%= form.submit "Search for pets", class: "btn btn-primary" %>
+     <%= form.label :query, "Pet finder:", class: "form-group"%><br/>
+     <%= form.text_field :query, class: "form-control" %>
+     <%= form.submit "Search for pets", class: "btn btn-primary"%>
     <% end %>
+
 
     <% if @searched_pets.nil? %>
       <p>Start searching for your forever friends today!</p>
@@ -73,7 +73,7 @@
       <input type="hidden" name="_method" value="PATCH" />
       <label for "description">why I want pets:</label>
       <textarea id="description" type='text' name='application_form[description]'></textarea><br/>
-      <input type='submit'/>
+      <input type='submit' class: "btn btn-primary"/>
 
     </form>
     <% end %>

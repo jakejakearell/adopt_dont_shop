@@ -2,7 +2,7 @@
   <blockquote class="blockquote text-center">
     <h2 class="display-5">Start a New Application</h2>
   </<blockquote>
-
+<div class="form-group">
   <%= form_tag "/applications" do %>
   <div class="form-group row">
     <%= label_tag :name%>
@@ -24,6 +24,7 @@
     <%= label_tag :zip_code %>
     <%= text_field_tag :zip_code %><br>
   </div>
-    <%= submit_tag 'Create Application' %>
+    <%= submit_tag 'Create Application', class: "btn btn-primary" %>
   <% end %>
+</div>
 </div>
