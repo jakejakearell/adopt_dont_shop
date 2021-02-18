@@ -4,7 +4,7 @@ describe Pet, type: :model do
   describe 'relationships' do
     it { should belong_to :shelter }
     it { should have_many :application_pets}
-    it { should have_many(:application_forms).through(:application_pets)} 
+    it { should have_many(:application_forms).through(:application_pets)}
   end
 
   describe 'validations' do
@@ -39,6 +39,17 @@ describe Pet, type: :model do
       expect(pet.sex).to eq('female')
       expect(pet.female?).to be(true)
       expect(pet.male?).to be(false)
+    end
+  end
+
+  describe "class methods" do
+    it "#search" do
+      shelter = Shelter.create!(name: 'Pet Rescue', address: '123 Adoption Ln.', city: 'Denver', state: 'CO', zip: '80222')
+      pet = shelter.pets.create!(sex: :female, name: "Fluffy", approximate_age: 3, description: 'super cute')
+      pet_2 = shelter.pets.create!(sex: :female, name: "Jar", approximate_age: 3, description: 'super cute')
+
+      expect(Pet.search("FLU")[0]).to eq(pet)
+
     end
   end
 end
