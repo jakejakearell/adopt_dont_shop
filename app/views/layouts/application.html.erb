@@ -11,9 +11,18 @@
   <header>
     <div class="nav-bar">
       <ul>
-        <p><%= link_to "Back to Home", "/" %>
-          <%= link_to "Go to Shelters", "/shelters" %>
-          <%= link_to 'Go to Pets', "/pets" %>
+        <div class="row">
+          <div class="col">
+            <%= link_to "Back to Home", "/", class:"list-group-item list-group-item-action" %>
+          </div>
+          <div class="col">
+          <%= link_to "Go to Shelters", "/shelters", class: "list-group-item list-group-item-primary" %>
+          </div>
+          <div class="col">
+          <%= link_to 'Go to Pets', "/pets", class: "list-group-item list-group-item-danger" %>
+          </div>
+        </div>
+
   </head><br>
   <% flash.each do |type, message| %>
     <p><%= message %></p>

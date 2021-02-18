@@ -9,4 +9,18 @@ class Pet < ApplicationRecord
             }
 
   enum sex: [:female, :male]
+
+  def self.search(pet_name)
+   where("name ilike ? AND adoptable = true", "%#{pet_name}%")
+  end
+
+  def pending_review?(app_id)
+    pet = self.application_pets.where("application_form_id = ?", app_id)
+    pet[0].accepted.nil?
+  end
+
+  def accepted?(app_id)
+    pet = self.application_pets.where("application_form_id = ?", app_id)
+    pet[0].accepted == true
+  end
 end

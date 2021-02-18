@@ -1,0 +1,33 @@
+<div class="row justify-content-md-center">
+  <div class="col">
+    <p>Name: <%= "#{@application.name}" %></p>
+  </div>
+  <div class="col">
+    <p>Description: <%= "#{@application.description}" %></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <p><%= "City: #{@application.street_address}" %></p>
+  </div>
+  <div class="col">
+    <p><%= "City: #{@application.city}" %></p>
+  </div>
+  <div class="col">
+    <p><%= "State: #{@application.state}" %></p>
+  </div>
+  <div class="col">
+    <p><%= "Zipcode: #{@application.zip_code}" %></p>
+  </div>
+</div>
+
+<% if @application.reviewed == false && @application.accepted.nil? %>
+  <p>Status: In Progress</p>
+<% elsif @application.reviewed == true && @application.accepted.nil? %>
+  <p>Status: Pending</p>
+<% elsif @application.accepted == true %>
+    <p>Status: Accepted</p>
+<% else %>
+    <p>Status: Rejected</p>
+<% end %>

@@ -32,7 +32,7 @@ class ApplicationFormsController < ApplicationController
       flash[:notice] = "Enter search term."
       render :show
     else
-      @searched_pets = Pet.where("name ilike ?", "%#{params[:query]}%")
+      @searched_pets = Pet.search(params[:query])
       render :show
     end
   end
