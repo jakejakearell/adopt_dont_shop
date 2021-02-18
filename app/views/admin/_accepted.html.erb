@@ -1,20 +1,20 @@
 <div class="row">
 <div id="pet_id-<%=pet.id%>">
-    <% if app_pet.accepted.nil? && pet.adoptable == false%>
+  <% if pet.pending_review?(application.id) && pet.adoptable == false%>
   <div class ="col">
     <p> Pet has been adopted </p>
   </div>
   <div class="col">
     <%= button_to "Reject", {:controller => "admin", :action => "pet_status", :application_id => "#{@application.id}", :approve => false, :pet => "#{pet.id}" }, :method=>:post  %>
   </div>
-<% elsif app_pet.accepted.nil?%>
+  <% elsif pet.pending_review?(application.id)%>
   <div class="col">
     <%= button_to "Approve", {:controller => "admin", :action => "pet_status", :application_id => "#{@application.id}", :approve => true, :pet => "#{pet.id}" }, :class => "btn btn-primary", :method=>:post  %>
   </div>
   <div class="col">
     <%= button_to "Reject", {:controller => "admin", :action => "pet_status", :application_id => "#{@application.id}", :approve => false, :pet => "#{pet.id}" }, :class => "btn btn-danger", :method=>:post  %>
   </div>
-  <% elsif app_pet.accepted == true%>
+  <% elsif pet.accepted?(application.id)%>
     <p> Accepted </p>
   <% else %>
     <p> Rejected </p>
