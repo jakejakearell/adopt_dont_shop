@@ -11,4 +11,8 @@ class AdminController < ApplicationController
     ApplicationPet.approved?(params[:pet], params[:application_id])
     render :show
   end
+
+  def shelters
+    @shelters = Shelter.all
+  end
 end
