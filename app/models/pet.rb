@@ -9,4 +9,8 @@ class Pet < ApplicationRecord
             }
 
   enum sex: [:female, :male]
+
+  def self.search(pet_name)
+   where("name ilike ? AND adoptable = true", "%#{pet_name}%")
+ end
 end
