@@ -53,8 +53,7 @@ RSpec.describe "the Application index page", type: :feature do
         visit "admin/shelters/"
 
 
-
-        within "#shelter-1" do
+        within "#shelter-0" do
           expect(page).to have_content("Longmont")
         end
 
