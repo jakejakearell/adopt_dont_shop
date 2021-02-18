@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   post "/applications/:id/adopt/:id", to: "application_forms#add_pet"
   patch "/applications/:id", to: "application_forms#update"
 
+  get "/admin/shelters", to: "admin#shelters"
   get "/admin/applications/:id", to: "admin#show"
   post "/admin/pet_status", to: "admin#pet_status"
 end
