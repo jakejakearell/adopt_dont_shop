@@ -28,9 +28,13 @@ class ApplicationFormsController < ApplicationController
 
   def pet_search
     @application = ApplicationForm.find(params[:id])
-    # @searched_pets = Pet.where("name = ?", params[:query])
-    @searched_pets = Pet.where("lower(name) LIKE ?", "%#{params[:query].downcase}%")
-    render :show
+    if params[:query] == ""
+      flash[:notice] = "Enter search term."
+      render :show
+    else
+      @searched_pets = Pet.where("name ilike ?", "%#{params[:query]}%")
+      render :show
+    end
   end
 
   def add_pet
