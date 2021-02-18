@@ -1,6 +1,7 @@
 class AdminController < ApplicationController
   def show
     @application = ApplicationForm.find(params[:id])
+    @app_pet = nil
   end
 
   def pet_status
