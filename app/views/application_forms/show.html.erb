@@ -1,63 +1,28 @@
 <div class="container-fluid">
 
-  <div class="row justify-content-md-center">
-    <div class="col">
-      <p>Name: <%= "#{@application.name}" %></p>
-    </div>
-    <div class="col">
-      <p>Description: <%= "#{@application.description}" %></p>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <p><%= "City: #{@application.street_address}" %></p>
-    </div>
-    <div class="col">
-      <p><%= "City: #{@application.city}" %></p>
-    </div>
-    <div class="col">
-      <p><%= "State: #{@application.state}" %></p>
-    </div>
-    <div class="col">
-      <p><%= "Zipcode: #{@application.zip_code}" %></p>
-    </div>
-  </div>
-
-  <% if @application.reviewed == false && @application.accepted.nil? %>
-    <p>Status: In Progress</p>
-  <% elsif @application.reviewed == true && @application.accepted.nil? %>
-    <p>Status: Pending</p>
-  <% elsif @application.accepted == true %>
-      <p>Status: Accepted</p>
-  <% else %>
-      <p>Status: Rejected</p>
-  <% end %>
+  <%= render partial: "applicant_info", locals:{application: @application} %>
 
   <% if @application.reviewed != true %>
-
-
     <%= form_with url: "/applications/#{@application.id}/pet_search", method: :post, local: true do |form| %>
-     <%= form.label :query, "Pet finder:", class: "form-group"%><br/>
-     <%= form.text_field :query, class: "form-control" %>
-     <%= form.submit "Search for pets", class: "btn btn-primary"%>
-    <% end %>
-
-
-    <% if @searched_pets.nil? %>
-      <p>Start searching for your forever friends today!</p>
-    <% else %>
-      <% @searched_pets.each do |pet| %>
-        <%= image_tag "#{pet.image}", class: "img-thumbnail", style: "width:300px;height:250px;" %><br><br>
-        <blockquote class="blockquote">
-          <p class="mb-0"><%= pet.description %></p>
-          <footer class="blockquote-footer"><%= pet.name %><cite title="Source Title"> <%= pet.approximate_age%> </cite></footer>
-        </blockquote>
-        <%= button_to "Adopt Me", {:controller => "application_forms", :action => "add_pet", :pet_id => "#{pet.id}", } , :method=>:post   %>
-      <% end %>
-    <% end %>
-
+    <%= form.label :query, "Pet finder:", class: "form-group"%><br/>
+    <%= form.text_field :query, class: "form-control" %>
+    <%= form.submit "Search for pets", class: "btn btn-primary"%>
   <% end %>
+
+  <% if @searched_pets.nil? %>
+    <p>Start searching for your forever friends today!</p>
+  <% else %>
+    <% @searched_pets.each do |pet| %>
+      <%= image_tag "#{pet.image}", class: "img-thumbnail", style: "width:300px;height:250px;" %><br><br>
+      <blockquote class="blockquote">
+        <p class="mb-0"><%= pet.description %></p>
+        <footer class="blockquote-footer"><%= pet.name %><cite title="Source Title"> <%= pet.approximate_age%> </cite></footer>
+      </blockquote>
+      <%= button_to "Adopt Me", {:controller => "application_forms", :action => "add_pet", :pet_id => "#{pet.id}", } , :method=>:post   %>
+    <% end %>
+  <% end %>
+  <% end %>
+
 
   <% @application.pets.each do |pet| %>
     <section id="pet-<%=pet.id%>">
@@ -65,18 +30,16 @@
   <% end %>
   </section>
 
-
-    <% if !@application.pets.empty? && @application.reviewed == false %>
-    <div id="application-<%=@application.id%>">
-      <form action="/applications/<%= @application.id %>" method="post">
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <input type="hidden" name="_method" value="PATCH" />
-      <label for "description">why I want pets:</label>
-      <textarea id="description" type='text' name='application_form[description]'></textarea><br/>
-      <input type='submit' class: "btn btn-primary"/>
-
-    </form>
-    <% end %>
+  <% if !@application.pets.empty? && @application.reviewed == false %>
+  <div id="application-<%=@application.id%>">
+    <form action="/applications/<%= @application.id %>" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="PATCH" />
+    <label for "description">why I want pets:</label>
+    <textarea id="description" type='text' name='application_form[description]'></textarea><br/>
+    <input type='submit' class: "btn btn-primary"/>
+  </form>
+  <% end %>
   </div>
 
 </div>
