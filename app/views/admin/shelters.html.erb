@@ -1,8 +1,12 @@
 <% counter = 0 %>
-
   <% @shelters.each do |shelter| %>
   <div id="shelter-<%= counter %>">
-    <p><%= shelter.name %></p>
+    <a href="/admin/shelters/<%= shelter.id%>"><%= shelter.name %></a>
     <% counter += 1 %>
   <% end %>
 </div>
+
+<h3>Shelter's with Pending Applications</h3>
+  <% @pending.each do |pending| %>
+    <%= pending.name %><br>
+  <% end %>

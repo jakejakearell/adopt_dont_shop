@@ -56,6 +56,19 @@ RSpec.describe "the Application index page", type: :feature do
         within "#shelter-0" do
           expect(page).to have_content("Longmont")
         end
+      end
+    end
+
+    describe 'when I visit the shelter index page' do
+      it "I see a section for Shelter's with Pending Applications" do
+        visit "admin/shelters"
+
+        expect(page).to have_content("Shelter's with Pending Applications")
+
+
+
+        expect(page).to have_content("Longmont")
+        expect(page).to have_content("Dumb")
 
       end
     end
@@ -64,9 +77,22 @@ RSpec.describe "the Application index page", type: :feature do
       it "I see that shelter's name and full address" do
         visit "admin/shelters/#{@lhs.id}"
 
-        expect(page).to have_content("address: '9595 Nelson Road', city: 'Longmont', state: 'CO', zip: 80501")
+        expect(page).to have_content("Address: 9595 Nelson Road City: Longmont State: CO Zipcode: 80501")
         expect(page).to have_content("Longmont Humane Society")
 
+      end
+    end
+
+    describe 'when I visit the shelter show page' do
+      it "I see that shelter's statistics" do
+        visit "admin/shelters/#{@lhs.id}"
+
+        expect(page).to have_content("adopted pets")
+        expect(page).to have_content("0")
+        expect(page).to have_content("adoptable pets")
+        expect(page).to have_content("3")
+        expect(page).to have_content("pet age")
+        expect(page).to have_content("6.6666")
       end
     end
   end

@@ -32,5 +32,6 @@ Rails.application.routes.draw do
 
   get "/admin/shelters", to: "admin#shelters"
   get "/admin/applications/:id", to: "admin#show"
+  get "/admin/shelters/:id", to: "admin#shelter_show"
   post "/admin/pet_status", to: "admin#pet_status"
 end
