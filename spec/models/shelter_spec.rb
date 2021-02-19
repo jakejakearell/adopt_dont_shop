@@ -16,7 +16,6 @@ describe Shelter, type: :model do
       expect(Shelter.reverse_order_by_name.first.name).to eq("Zippy Humane Society")
       expect(Shelter.reverse_order_by_name.last.name).to eq("Arbies Friends League")
 
-
     end
   end
 end

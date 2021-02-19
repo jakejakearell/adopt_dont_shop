@@ -48,7 +48,7 @@ RSpec.describe "the Application index page", type: :feature do
   end
 
   describe "As an admin" do
-    describe 'when I visit the shelter page' do
+    describe 'when I visit the shelter index page' do
       it "I see all Shelters in the system listed in reverse alphabetical order by name" do
         visit "admin/shelters/"
 
@@ -56,6 +56,16 @@ RSpec.describe "the Application index page", type: :feature do
         within "#shelter-0" do
           expect(page).to have_content("Longmont")
         end
+
+      end
+    end
+
+    describe 'when I visit the shelter show page' do
+      it "I see that shelter's name and full address" do
+        visit "admin/shelters/#{@lhs.id}"
+
+        expect(page).to have_content("address: '9595 Nelson Road', city: 'Longmont', state: 'CO', zip: 80501")
+        expect(page).to have_content("Longmont Humane Society")
 
       end
     end
