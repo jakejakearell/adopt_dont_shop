@@ -1,17 +1,17 @@
 <div class="containter-fluid">
-  <h3><%= @shelter.name %></h3>
-  <p>Address: <%= @shelter.address %>
-    City: <%= @shelter.city %> State: <%= @shelter.state %> Zipcode: <%= @shelter.zip %></p>
+  <h3><%= @shelter_facade.name %></h3>
+  <p>Address: <%= @shelter_facade.address %>
+    City: <%= @shelter_facade.city %> State: <%= @shelter_facade.state %> Zipcode: <%= @shelter_facade.zip %></p>
 </div>
 
 <h3> Stats </h3>
 <p> adoptable pets </p>
-<%= @count %><br>
+<%= @shelter_facade.count %><br>
 <p> adopted pets </p>
-<%= @adopted %>
+<%= @shelter_facade.adopted %>
 <p> average pet age </p>
-<%= @age %>
+<%= @shelter_facade.age %>
 <p>Pets with action required<p>
-<% @action_required.each do |action|%>
+<% @shelter_facade.action_required.each do |action|%>
   <a href="/pets/<%= action.id%>"><%= action.name %></a><br>
 <% end %>

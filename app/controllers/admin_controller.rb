@@ -17,10 +17,6 @@ class AdminController < ApplicationController
   end
 
   def shelter_show
-    @shelter = Shelter.find(params[:id])
-    @count = Shelter.adoptable_pets(params[:id])
-    @adopted = Shelter.adopted_pets(params[:id])
-    @age = Shelter.pet_age(params[:id])
-    @action_required = Shelter.action_required(params[:id])
+    @shelter_facade = ShelterFacade.new(params[:id])
   end
 end
